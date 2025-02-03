@@ -1,12 +1,12 @@
-import "~/styles/globals.css";
+import { GeistSans } from 'geist/font/sans';
+import { type Metadata } from 'next';
 
-import { GeistSans } from "geist/font/sans";
-import { type Metadata } from "next";
+import '~/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: "Memory Game",
-  description: "Test your memory!",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  title: 'Memory Game',
+  description: 'Test your memory!',
+  icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
 
 export default function RootLayout({
