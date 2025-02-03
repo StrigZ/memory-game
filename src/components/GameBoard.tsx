@@ -119,7 +119,7 @@ export default function GameBoard({
         <ul className="grid w-full auto-rows-[250px] grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
           {activeEmojis.length === 0 ? (
             <Loader
-              className="col-span-full w-full animate-spin text-white"
+              className="col-span-full mx-auto animate-spin text-white"
               size={72}
             />
           ) : (
