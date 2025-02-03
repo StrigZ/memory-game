@@ -16,6 +16,9 @@ jobs:
         shell: bash
         run: find . -type f -name ".env.example" -exec sh -c 'cp "$1" "${1%.*}"' _ {} \;
 
+      - name: Set up environment variables
+        run: |
+          echo "NEXT_PUBLIC_API_KEY=${{ secrets.NEXT_PUBLIC_API_KEY }}" >> .env.local
       - name: Typecheck
         run: npm run typecheck
 
