@@ -3,7 +3,7 @@
 import { Loader } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { Emoji } from '~/types';
+import { type Emoji } from '~/types';
 
 import Card from './Card';
 import GameOverDialog from './GameOverDialog';
@@ -41,7 +41,7 @@ export default function GameBoard({
   const resetEmojis = () => {
     const cachedData = localStorage.getItem('data');
     if (cachedData) {
-      const data: Emoji[] = JSON.parse(cachedData);
+      const data = JSON.parse(cachedData) as Emoji[];
 
       const newActiveEmojis: string[] = [];
       while (newActiveEmojis.length < 12) {

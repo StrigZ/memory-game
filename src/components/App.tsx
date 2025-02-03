@@ -9,8 +9,7 @@ import Header from './Header';
 
 const API_URL = `https://emoji-api.com/emojis?access_key=${env.NEXT_PUBLIC_API_KEY}`;
 
-type Props = {};
-export default function App({}: Props) {
+export default function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
@@ -28,6 +27,9 @@ export default function App({}: Props) {
         .then((data) => {
           localStorage.setItem('data', JSON.stringify(data));
           setIsDataLoaded(true);
+        })
+        .catch(() => {
+          console.error('Something went wrong with API call');
         });
     } else {
       setIsDataLoaded(true);
