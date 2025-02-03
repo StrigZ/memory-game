@@ -7,7 +7,8 @@ import { env } from '~/env';
 import GameBoard from './GameBoard';
 import Header from './Header';
 
-const API_URL = `https://emoji-api.com/emojis?access_key=${env.NEXT_PUBLIC_API_KEY}`;
+const API_URL =
+  `https://emoji-api.com/emojis?access_key=${env.NEXT_PUBLIC_API_KEY}` || '';
 
 export default function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
