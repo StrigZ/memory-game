@@ -7,5 +7,5 @@ TODO:
 - [x] Create Card component
 - [x] Create component to display cards
 - [x] Implement game logic
-- [ ] Display game status (win/lose)
+- [x] Display game status (win/lose)
 - [ ] Implement score system

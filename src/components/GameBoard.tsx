@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import { Emoji } from '~/types';
 
 import Card from './Card';
+import GameOverDialog from './GameOverDialog';
 
 type Props = { isDataLoaded: boolean };
 export default function GameBoard({ isDataLoaded }: Props) {
   const [activeEmojis, setActiveEmojis] = useState<string[]>([]);
   const [clickedEmojis, setClickedEmojis] = useState<string[]>([]);
+  const [isGameStatusDialogOpen, setIsGameStatusDialogOpen] = useState(false);
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -59,13 +61,7 @@ export default function GameBoard({ isDataLoaded }: Props) {
 
   const handleCardClick = (emoji: string) => {
     if (clickedEmojis.includes(emoji)) {
-      // display that the user has lost
-      console.log('Game over. Resetting...');
-      // set highs core
-
-      // reset everything
-      resetEmojis();
-      setClickedEmojis([]);
+      setIsGameStatusDialogOpen(true);
     } else {
       setClickedEmojis((prev) => {
         const newClickedEmojis = [...prev, emoji];
@@ -77,20 +73,36 @@ export default function GameBoard({ isDataLoaded }: Props) {
     }
   };
 
+  const handleDialogClose = () => {
+    resetGame();
+    setIsGameStatusDialogOpen(false);
+  };
+
+  const resetGame = () => {
+    resetEmojis();
+    setClickedEmojis([]);
+  };
   return (
-    <main className="flex flex-1 items-center justify-center p-4">
-      <ul className="grid w-full auto-rows-[250px] grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
-        {activeEmojis.length === 0 ? (
-          <Loader
-            className="col-span-full w-full animate-spin text-white"
-            size={72}
-          />
-        ) : (
-          activeEmojis.map((emoji) => (
-            <Card key={emoji} emoji={emoji} onCardClick={handleCardClick} />
-          ))
-        )}
-      </ul>
-    </main>
+    <>
+      <GameOverDialog
+        handleDialogClose={handleDialogClose}
+        hasWon={clickedEmojis.length === 12}
+        isGameStatusDialogOpen={isGameStatusDialogOpen}
+      />
+      <main className="flex flex-1 items-center justify-center p-4">
+        <ul className="grid w-full auto-rows-[250px] grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+          {activeEmojis.length === 0 ? (
+            <Loader
+              className="col-span-full w-full animate-spin text-white"
+              size={72}
+            />
+          ) : (
+            activeEmojis.map((emoji) => (
+              <Card key={emoji} emoji={emoji} onCardClick={handleCardClick} />
+            ))
+          )}
+        </ul>
+      </main>
+    </>
   );
 }
