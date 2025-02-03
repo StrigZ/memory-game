@@ -1,9 +1,9 @@
-type Props = {};
-export default function Score({}: Props) {
+type Props = { score: number; bestScore: number };
+export default function Score({ bestScore = 0, score = 0 }: Props) {
   return (
-    <div className="text-xl">
-      <p className="font-medium">Score: 69</p>
-      <p className="font-medium">Best score: 333</p>
+    <div className="font-mono text-xl">
+      <p className="font-medium">Score: {score}</p>
+      <p className="font-medium">Best score: {bestScore}</p>
     </div>
   );
 }

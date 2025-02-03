@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import { env } from '~/env';
 
 import GameBoard from './GameBoard';
@@ -11,6 +12,8 @@ const API_URL = `https://emoji-api.com/emojis?access_key=${env.NEXT_PUBLIC_API_K
 type Props = {};
 export default function App({}: Props) {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
 
   useEffect(() => {
     const cachedData = localStorage.getItem('data');
@@ -33,8 +36,15 @@ export default function App({}: Props) {
 
   return (
     <>
-      <Header />
-      <GameBoard isDataLoaded={isDataLoaded} />
+      <Header bestScore={bestScore} score={score} />
+      <GameBoard
+        onScoreIncrease={() => setScore((prev) => ++prev)}
+        onScoreReset={() => setScore(0)}
+        onBestScoreSet={(score) => setBestScore(score)}
+        bestScore={bestScore}
+        score={score}
+        isDataLoaded={isDataLoaded}
+      />
     </>
   );
 }

@@ -8,8 +8,22 @@ import { Emoji } from '~/types';
 import Card from './Card';
 import GameOverDialog from './GameOverDialog';
 
-type Props = { isDataLoaded: boolean };
-export default function GameBoard({ isDataLoaded }: Props) {
+type Props = {
+  isDataLoaded: boolean;
+  bestScore: number;
+  score: number;
+  onScoreReset: () => void;
+  onScoreIncrease: () => void;
+  onBestScoreSet: (score: number) => void;
+};
+export default function GameBoard({
+  isDataLoaded,
+  onScoreIncrease,
+  onBestScoreSet,
+  bestScore,
+  score,
+  onScoreReset,
+}: Props) {
   const [activeEmojis, setActiveEmojis] = useState<string[]>([]);
   const [clickedEmojis, setClickedEmojis] = useState<string[]>([]);
   const [isGameStatusDialogOpen, setIsGameStatusDialogOpen] = useState(false);
@@ -62,14 +76,18 @@ export default function GameBoard({ isDataLoaded }: Props) {
   const handleCardClick = (emoji: string) => {
     if (clickedEmojis.includes(emoji)) {
       setIsGameStatusDialogOpen(true);
+      resetScore();
     } else {
+      onScoreIncrease();
       setClickedEmojis((prev) => {
         const newClickedEmojis = [...prev, emoji];
-        shuffleActiveEmojis();
+        if (newClickedEmojis.length === 12) {
+          setIsGameStatusDialogOpen(true);
+        }
 
+        shuffleActiveEmojis();
         return newClickedEmojis;
       });
-      // increase score
     }
   };
 
@@ -82,6 +100,14 @@ export default function GameBoard({ isDataLoaded }: Props) {
     resetEmojis();
     setClickedEmojis([]);
   };
+
+  const resetScore = () => {
+    if (score > bestScore) {
+      onBestScoreSet(score);
+    }
+    onScoreReset();
+  };
+
   return (
     <>
       <GameOverDialog
