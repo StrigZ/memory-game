@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { env } from '~/env';
 
 import GameBoard from './GameBoard';
@@ -10,12 +10,11 @@ const API_URL = `https://emoji-api.com/emojis?access_key=${env.NEXT_PUBLIC_API_K
 
 type Props = {};
 export default function App({}: Props) {
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   useEffect(() => {
     const cachedData = localStorage.getItem('data');
-    if (cachedData) {
-      // get random 12 emojis
-      return;
-    } else {
+    if (!cachedData) {
       fetch(API_URL)
         .then((res) => {
           if (!res.ok) {
@@ -25,14 +24,17 @@ export default function App({}: Props) {
         })
         .then((data) => {
           localStorage.setItem('data', JSON.stringify(data));
+          setIsDataLoaded(true);
         });
+    } else {
+      setIsDataLoaded(true);
     }
   }, []);
 
   return (
     <>
       <Header />
-      <GameBoard />
+      <GameBoard isDataLoaded={isDataLoaded} />
     </>
   );
 }
