@@ -30,7 +30,7 @@ export default function GameOverDialog({
           >
             <X size={24} />
           </button>
-          {hasWon ? 'NO WAY YOU WON' : 'YOU LOST LeMAO'}
+          {hasWon ? 'YOU WON!' : 'Better luck next time.'}
         </div>
       </div>
     </dialog>
