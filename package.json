@@ -9,7 +9,8 @@
 		"preview": "next build && next start",
 		"start": "next start",
 		"typecheck": "tsc --noEmit",
-		"lint": "npx biome lint --fix --unsafe"
+		"lint": "npx biome lint --fix --unsafe",
+		"format": "npx biome format --fix"
 	},
 	"dependencies": {
 		"@t3-oss/env-nextjs": "^0.10.1",
